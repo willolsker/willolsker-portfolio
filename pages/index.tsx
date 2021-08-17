@@ -5,7 +5,11 @@ import {faGithub} from "@fortawesome/free-brands-svg-icons";
 import {faFileAlt, faChevronDown} from "@fortawesome/free-solid-svg-icons";
 import ExperienceItem from "./components/ExperienceItem";
 
-const Home: NextPage = () => {
+interface HomeProps {
+    isMobile: boolean
+}
+
+const Home: NextPage<HomeProps> = ({ isMobile }) => {
   return (
     <div>
       <Head>
@@ -32,7 +36,10 @@ const Home: NextPage = () => {
             Hi, I am Will Olsker! I am an innovative and passionate software developer. Since writing my first line of JavaScript in 2013, I have continued to build my development skills working on a range of full-stack projects. In addition to writing code, my ability to see the big picture and work with end-users has helped me to architect large-scale projects to solve big problems. And while I might not know everything yet, I am constantly working to improve my projects and expand both my technical and soft skill sets.
         </article>
         <section className="experience">
-            <h1>My Experience</h1>
+            <h1>
+                My Experience
+                {isMobile && <span style={{fontSize: 24}}> (tap for details)</span>}
+            </h1>
             <div className="experience-items">
                 <ExperienceItem img="https://upload.wikimedia.org/wikipedia/commons/9/99/Unofficial_JavaScript_logo_2.svg" name="JavaScript" color="#f7df1e" experience={8}>
                     I have been learning JavaScript for 7 years in total with a variety of frameworks.
@@ -194,6 +201,14 @@ const Home: NextPage = () => {
         </footer>
     </div>
   )
+}
+
+Home.getInitialProps = async ({ req }) => {
+    const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
+    let isMobile = Boolean(userAgent?.match(
+        /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
+    ));
+    return { isMobile };
 }
 
 export default Home
