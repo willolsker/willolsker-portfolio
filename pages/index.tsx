@@ -9,7 +9,6 @@ const Home: NextPage = () => {
   return (
     <div>
       <Head>
-          <link href="/inter/inter.css" rel="stylesheet"/>
           <title>Will Olsker</title>
         <meta name="description" content="Will Olsker's development and design portfolio" />
       </Head>
